@@ -4,6 +4,63 @@
   
     
     <entry>
+      <title>获取Android触摸采样率</title>
+      <link href="2021/01/23/android0/"/>
+      <url>2021/01/23/android0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>使用getevent来获取触摸采样率</p><a id="more"></a><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>使用adb，输入以下命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell getevent -t -r -l</span><br></pre></td></tr></table></figure><p>然后在手机快速滑动屏幕，就会显示采样率</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>PDF文档资源</title>
+      <link href="2021/01/23/play2/"/>
+      <url>2021/01/23/play2/</url>
+      
+        <content type="html"><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>部分文档网盘资源</p><a id="more"></a><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h3 id="《电脑爱好者》杂志"><a href="#《电脑爱好者》杂志" class="headerlink" title="《电脑爱好者》杂志"></a>《电脑爱好者》杂志</h3><blockquote><p>（百度云盘）链接：<a href="https://pan.baidu.com/s/1nRvrwcZ0iuzjp_SVrJd_Pg">电脑爱好者</a><br>验证码：3p52</p></blockquote><blockquote><p>（lanzo）链接：<a href="https://zhenxz.lanzous.com/b04gijhyj">https://zhenxz.lanzous.com/b04gijhyj</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 资源 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>云盘视频资源</title>
+      <link href="2021/01/23/play1/"/>
+      <url>2021/01/23/play1/</url>
+      
+        <content type="html"><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>部分视频网盘资源</p><a id="more"></a><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h3 id="YM-YPM"><a href="#YM-YPM" class="headerlink" title="YM/YPM"></a>YM/YPM</h3><blockquote><p>（百度云盘）链接：<a href="https://yun.baidu.com/s/14_kWtyKB2LKRKvYSw1NMgg">Yes minister&amp;Yes prime minister</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 资源 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>win10欢乐的蓝屏</title>
       <link href="2021/01/20/play0/"/>
       <url>2021/01/20/play0/</url>
