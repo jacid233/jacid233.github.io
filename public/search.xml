@@ -4,6 +4,63 @@
   
     
     <entry>
+      <title>黑苹果核显测试</title>
+      <link href="2021/03/25/hackintosh2/"/>
+      <url>2021/03/25/hackintosh2/</url>
+      
+        <content type="html"><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><ul><li>以下是黑苹果GeekBench5 的GPU跑分情况，通过核显看我机的EFI对各版本表现情况。以下记录可能有缺漏</li></ul><a id="more"></a><h2 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h2><ul><li>UHD 620</li></ul><h2 id="Win10"><a href="#Win10" class="headerlink" title="Win10"></a>Win10</h2><p>OpenCL：5109</p><h2 id="Catalina-10-15-4"><a href="#Catalina-10-15-4" class="headerlink" title="Catalina 10.15.4"></a>Catalina 10.15.4</h2><p>OpenCL：4800</p><p>CPU：单核790，多核3119</p><h2 id="Catalina-10-15-7"><a href="#Catalina-10-15-7" class="headerlink" title="Catalina 10.15.7"></a>Catalina 10.15.7</h2><p>OpenCL：4362</p><p>CPU：单核788，多核3125</p><h2 id="Mojave-10-14-6"><a href="#Mojave-10-14-6" class="headerlink" title="Mojave 10.14.6"></a>Mojave 10.14.6</h2><p>OpenCL：4772</p><p>CPU：单核793，多核3183</p><h2 id="Big-Sur（更换EFI）"><a href="#Big-Sur（更换EFI）" class="headerlink" title="Big Sur（更换EFI）"></a>Big Sur（更换EFI）</h2><p>OpenCL：4875</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>无论如何，黑苹果都难以超越win10的性能体验</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 黑苹果 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>macOS安装后该做的事</title>
+      <link href="2021/03/25/hackintosh1/"/>
+      <url>2021/03/25/hackintosh1/</url>
+      
+        <content type="html"><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><blockquote><p>此文章是记录安装完macOS需要做哪些比较重要的工作</p></blockquote><a id="more"></a><h2 id="一、修改host"><a href="#一、修改host" class="headerlink" title="一、修改host"></a>一、修改host</h2><blockquote><p>打开第三方软件，有可能会发生软件一直在Dock栏跳来跳去的现象，这是因为系统会连接服务器进行软件签名校验，如果网络不好，那就会一直跳，很久才反应过来。</p></blockquote><h3 id="打开hosts"><a href="#打开hosts" class="headerlink" title="打开hosts"></a>打开hosts</h3><ul><li>在终端输入以下命令，进入/etc，打开hosts</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">cd</span> /etc/hosts</span><br></pre></td></tr></table></figure><ul><li>在里面添加以下内容</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 ocsp.apple.com</span><br></pre></td></tr></table></figure><blockquote><p>此方法在Big Sur好像不管用</p></blockquote><h2 id="二、关闭更新"><a href="#二、关闭更新" class="headerlink" title="二、关闭更新"></a>二、关闭更新</h2><ul><li>设置-&gt;软件更新</li></ul><h2 id="三、开启trim"><a href="#三、开启trim" class="headerlink" title="三、开启trim"></a>三、开启trim</h2><blockquote><p>仅支持trim算法的固态硬盘有效</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo trimforce <span class="built_in">enable</span></span><br></pre></td></tr></table></figure><h2 id="四、允许任何来源程序"><a href="#四、允许任何来源程序" class="headerlink" title="四、允许任何来源程序"></a>四、允许任何来源程序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-disable</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 黑苹果 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>npm镜像源</title>
+      <link href="2021/03/25/npm0/"/>
+      <url>2021/03/25/npm0/</url>
+      
+        <content type="html"><![CDATA[<ul><li>关于npm国内源的事</li></ul><a id="more"></a><h2 id="通过命令配置"><a href="#通过命令配置" class="headerlink" title="通过命令配置"></a>通过命令配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure><h3 id="验证命令"><a href="#验证命令" class="headerlink" title="验证命令"></a>验证命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure><h2 id="通过使用cnpm安装"><a href="#通过使用cnpm安装" class="headerlink" title="通过使用cnpm安装"></a>通过使用cnpm安装</h2><h3 id="安装cnpm"><a href="#安装cnpm" class="headerlink" title="安装cnpm"></a>安装cnpm</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure><h3 id="使用cnpm"><a href="#使用cnpm" class="headerlink" title="使用cnpm"></a>使用cnpm</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install xxx</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> npm使用 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>导出Edge浏览器的扩展</title>
       <link href="2021/02/13/browser0/"/>
       <url>2021/02/13/browser0/</url>
@@ -290,8 +347,8 @@
     
     <entry>
       <title>Hello World</title>
-      <link href="2021/01/18/hello-world/"/>
-      <url>2021/01/18/hello-world/</url>
+      <link href="2021/01/16/hello-world/"/>
+      <url>2021/01/16/hello-world/</url>
       
         <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><a id="more"></a><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo <span class="keyword">new</span> <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo <span class="keyword">server</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo <span class="keyword">generate</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
       
