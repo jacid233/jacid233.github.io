@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Ubuntu20.04安装后需要做的事">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu安装后">
+<meta property="og:url" content="http://example.com/2022/11/24/Ubuntu_install_after/index.html">
+<meta property="og:site_name" content="jacid233&#39;s blog">
+<meta property="og:description" content="Ubuntu20.04安装后需要做的事">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-24T15:07:12.000Z">
+<meta property="article:modified_time" content="2022-11-24T12:37:03.606Z">
+<meta property="article:author" content="jacid233">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/11/24/Ubuntu_install_after/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Ubuntu安装后 | jacid233's blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">jacid233's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th 分类 fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user 关于 fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2%E8%BD%AF%E4%BB%B6%E6%BA%90"><span class="nav-text">更换软件源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E7%9B%96%E5%AD%90%E4%B8%8D%E4%BC%91%E7%9C%A0"><span class="nav-text">关闭盖子不休眠</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%81%E7%94%A8nouveau"><span class="nav-text">禁用nouveau</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85nvidia%E9%97%AD%E6%BA%90%E9%A9%B1%E5%8A%A8"><span class="nav-text">安装nvidia闭源驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E6%98%BE-%E7%8B%AC%E6%98%BE%E5%88%87%E6%8D%A2"><span class="nav-text">集显&#x2F;独显切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E5%BC%80%E6%9C%BA%E5%8A%A8%E7%94%BB"><span class="nav-text">关闭开机动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-Gnome%E7%BE%8E%E5%8C%96"><span class="nav-text">Ubuntu Gnome美化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ttf-mscorefonts-installer%E9%97%AE%E9%A2%98"><span class="nav-text">ttf-mscorefonts-installer问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Python3%E5%92%8Cpip3"><span class="nav-text">安装Python3和pip3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85sublime-text3"><span class="nav-text">安装sublime-text3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPV%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">MPV配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E6%98%BE%E8%A7%86%E9%A2%91%E7%A1%AC%E8%A7%A3"><span class="nav-text">核显视频硬解</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="jacid233"
+      src="/images/jacid233.jpg">
+  <p class="site-author-name" itemprop="name">jacid233</p>
+  <div class="site-description" itemprop="description">testing</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jacid233" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jacid233" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/24/Ubuntu_install_after/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/jacid233.jpg">
+      <meta itemprop="name" content="jacid233">
+      <meta itemprop="description" content="testing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jacid233's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ubuntu安装后
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-24 23:07:12 / 修改时间：20:37:03" itemprop="dateCreated datePublished" datetime="2022-11-24T23:07:12+08:00">2022-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li>Ubuntu20.04安装后需要做的事</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="更换软件源"><a href="#更换软件源" class="headerlink" title="更换软件源"></a>更换软件源</h2><blockquote>
+<p>这里以华为源为例子</p>
+</blockquote>
+<p>1.备份配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp -a /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure>
+<p>2、修改sources.list文件，将<a target="_blank" rel="noopener" href="http://archive.ubuntu.com和http//security.ubuntu.com%E6%9B%BF%E6%8D%A2%E6%88%90http://repo.huaweicloud.com%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%8F%82%E8%80%83%E5%A6%82%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%9A">http://archive.ubuntu.com和http://security.ubuntu.com替换成http://repo.huaweicloud.com，可以参考如下命令：</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i <span class="string">&quot;s@http://.*archive.ubuntu.com@http://repo.huaweicloud.com@g&quot;</span> /etc/apt/sources.list</span><br><span class="line">sudo sed -i <span class="string">&quot;s@http://.*security.ubuntu.com@http://repo.huaweicloud.com@g&quot;</span> /etc/apt/sources.list</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>3、执行apt-get update更新索引</p>
+<h2 id="关闭盖子不休眠"><a href="#关闭盖子不休眠" class="headerlink" title="关闭盖子不休眠"></a>关闭盖子不休眠</h2><p>编辑下列文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/systemd/logind.conf</span><br></pre></td></tr></table></figure>
+<p>#HandlePowerKey按下电源键后的行为，默认power off</p>
+<p>#HandleSleepKey 按下挂起键后的行为，默认suspend</p>
+<p>#HandleHibernateKey按下休眠键后的行为，默认hibernate</p>
+<p>#HandleLidSwitch合上笔记本盖后的行为，默认suspend（改为ignore；即合盖不休眠）在原文件中，还要去掉前面的#</p>
+<p>然后将其中的：<br>#HandleLidSwitch=suspend改成下面，记得去掉“#”号：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HandleLidSwitch=ignore</span><br></pre></td></tr></table></figure>
+<p>最后重启服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service systemd-logind restart</span><br></pre></td></tr></table></figure>
+<p>注：在Ubuntu18.04和Ubuntu16.04笔记本电脑，下面测试可以使用。</p>
+<h2 id="禁用nouveau"><a href="#禁用nouveau" class="headerlink" title="禁用nouveau"></a>禁用nouveau</h2><p>输入命令查看nouveau的状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsmod | grep nouveau</span><br></pre></td></tr></table></figure>
+<p>备份系统黑名单</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/modprobe.d/blacklist.conf /etc/modprobe.d/blacklist.conf_backup</span><br></pre></td></tr></table></figure>
+<p>4.输入命令编辑系统黑名单。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/modprobe.d/blacklist.conf</span><br></pre></td></tr></table></figure>
+<p>5.在系统黑名单配置文件最下面添加以下代码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nouveau</span></span><br><span class="line"></span><br><span class="line">blacklist nouveau</span><br><span class="line"></span><br><span class="line">options nouveau modeset=0</span><br></pre></td></tr></table></figure>
+<p>6.更新配置信息使其生效。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-initramfs -u</span><br></pre></td></tr></table></figure>
+<p>7.重启一下ubuntu。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<p>8.最后可以通过以下命令检查是否禁用成功。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsmod | grep nouveau <span class="comment">#无返回结果说明禁用成功</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装nvidia闭源驱动"><a href="#安装nvidia闭源驱动" class="headerlink" title="安装nvidia闭源驱动"></a>安装nvidia闭源驱动</h2><p>安装依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc make -y</span><br></pre></td></tr></table></figure>
+<p>下载好驱动，执行命令进行安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh NVIDIA-Linux-x86_64-440.44-titan_rtx.run</span><br></pre></td></tr></table></figure>
+<p>如果没有错误，进入下一步，会出现警告，意思是缺少32位相关的兼容库，不用管，回车进入下一步</p>
+<blockquote>
+<p> WARNING: Unable to find a suitable destination to install 32-bit<br>          compatibility libraries. Your system may not be set up for 32-bit<br>          compatibility. 32-bit compatibility files will not be installed; if<br>          you wish to install them, re-run the installation and set a valid<br>          directory with the –compat32-libdir option.  </p>
+</blockquote>
+<p>意思是发现现在的libglvnd不是完整的，问你要不要安装完整版的libglvnd，可以装也可以不装，我这里选择不装Don’t install</p>
+<blockquote>
+<p>An incomplete installation of libglvnd was found. All of the essential<br>libglvnd libraries are present, but one or more optional components are<br>missing. Do you want to install a full copy of libglvnd? This will overwrite<br>any existing libglvnd libraries.</p>
+</blockquote>
+<p>上一步没安装libglvnd，所以出现警告，忽略，回车进入下一步</p>
+<blockquote>
+<p> WARNING: Unable to determine the path to install the libglvnd EGL vendor<br>          library config files. Check that you have pkg-config and the<br>          libglvnd development libraries installed, or specify a path with<br>          –glvnd-egl-config-path.</p>
+</blockquote>
+<p>问你要不要用nvidia-xconfig工具自动更新NVIDIA X的配置文件，不知道有啥用，选No，下一步</p>
+<blockquote>
+<p>Would you like to run the nvidia-xconfig utility to automatically update<br>your X configuration file so that the NVIDIA X driver will be used when you<br>restart X?  Any pre-existing X configuration file will be backed up.   </p>
+</blockquote>
+<p>检查是否安装成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+<h2 id="集显-独显切换"><a href="#集显-独显切换" class="headerlink" title="集显/独显切换"></a>集显/独显切换</h2><p> 查询当前选择的显卡</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prime-select query</span><br></pre></td></tr></table></figure>
+<p>切换独显</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo prime-select nvidia</span><br></pre></td></tr></table></figure>
+<p>切换集显</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo prime-select intel</span><br></pre></td></tr></table></figure>
+<p>查看nvidia显卡状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+<p>安装英特尔核显工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install intel-gpu-tools</span><br></pre></td></tr></table></figure>
+<p>查看英特尔核显状态</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">int</span>el_gpu_top</span><br></pre></td></tr></table></figure>
+<h2 id="关闭开机动画"><a href="#关闭开机动画" class="headerlink" title="关闭开机动画"></a>关闭开机动画</h2><p>打开文件：/etc/default/grub</p>
+<p>找到下面这句：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">&quot;quiet splash&quot;</span></span><br></pre></td></tr></table></figure>
+<p>去掉<font color="gree">quiet splash</font>后变成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>然后update开机方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-grub</span><br></pre></td></tr></table></figure>
+<h2 id="Ubuntu-Gnome美化"><a href="#Ubuntu-Gnome美化" class="headerlink" title="Ubuntu Gnome美化"></a>Ubuntu Gnome美化</h2><p>先要安装美化管理工具 gnome-tweak-tool</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gnome-tweak-tool</span><br></pre></td></tr></table></figure>
+<p>安装 gnome-shell-extensions</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gnome-shell-extensions</span><br></pre></td></tr></table></figure>
+<p>安装 dashtodock</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gnome-shell-extension-dashtodock</span><br></pre></td></tr></table></figure>
+<p>这个dashtodock有个小bug, 登录界面也会出现, 所以可以用如下命令修复, 注意这是在你开启dashtodock之后才会有的bug, 如果你不用, 就不要修改默认dock了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com ~/</span><br></pre></td></tr></table></figure>
+<p>主题设定：</p>
+<ul>
+<li><p>应用程序：Nordic-darker-v40</p>
+</li>
+<li><p>光标：MCMojave-cursors</p>
+</li>
+<li><p>图标：Epapirus</p>
+</li>
+</ul>
+<p>字体：</p>
+<ul>
+<li><p>窗口标题：HarmonyOS Sans Black 11</p>
+</li>
+<li><p>界面：HarmonyOS Sans Regular 11</p>
+</li>
+<li><p>文档：HarmonyOS Sans Regular 11</p>
+</li>
+<li><p>等宽：HarmonyOS Sans Regular 13</p>
+</li>
+</ul>
+<p>如何使用主题文件：</p>
+<ul>
+<li>在~目录下创建以下文件夹，然后解压主题文件放进去，其中.theme为主题，.icon为图标、指针等文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.theme</span><br><span class="line">.icon</span><br></pre></td></tr></table></figure>
+<p>附下载链接：<a target="_blank" rel="noopener" href="https://wwd.lanzouf.com/b02ow27jc">https://wwd.lanzouf.com/b02ow27jc</a><br>密码:eg8l</p>
+<p>ubuntu Dock中移动“显示应用程序”图标</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.shell.extensions.dash-to-dock show-apps-at-top <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2 id="ttf-mscorefonts-installer问题"><a href="#ttf-mscorefonts-installer问题" class="headerlink" title="ttf-mscorefonts-installer问题"></a>ttf-mscorefonts-installer问题</h2><p>故障显示：</p>
+<blockquote>
+<p>一些软件包的数据文件无法下载  以下软件包要求安装后下载附加数据，但其数据无法下载或无法处理。ttf-mscorefonts-installer</p>
+</blockquote>
+<p>这是一个永久错误，系统中的这些软件包将无法使用。您可能需要修复网络连接，然后卸载并重新安装它们。</p>
+<p>解决方法：</p>
+<p>到这个地址下载 <a target="_blank" rel="noopener" href="http://sourceforge.net/projects/corefonts/files/the">http://sourceforge.net/projects/corefonts/files/the</a> fonts/final/    下面的这些文件都下载到一个单独的目录， 注意新建一个，例如：/home/<user>/Downloads/temp</user></p>
+<p>另一个下载地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/andale32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/arial32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/arialb32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/comic32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/courie32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/georgi32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/impact32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/times32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/trebuc32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.net/corefonts/verdan32.exe</span><br><span class="line"></span><br><span class="line">wget http://downloads.sourceforge.NET/corefonts/webdin32.exe</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>然后执行 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg-reconfigure ttf-mscorefonts-installer </span><br></pre></td></tr></table></figure>
+<p>这时会弹出一个对话框，大概意思，就是要在对话框里填写刚你现载文件的路径。</p>
+<p>后续：这个方法有时也不灵光，这时直接让 ubuntu 安装整个附加包</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install ubuntu-restricted-extras</span><br></pre></td></tr></table></figure>
+<h2 id="安装Python3和pip3"><a href="#安装Python3和pip3" class="headerlink" title="安装Python3和pip3"></a>安装Python3和pip3</h2><p>Python二代：Python</p>
+<p>Python三代：Python3</p>
+<p>pip也同理，不过pip为python-pip</p>
+<p>安装python3：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python3</span><br></pre></td></tr></table></figure>
+<p>安装pip：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python3-pip</span><br></pre></td></tr></table></figure>
+<p>注意：这时安装完毕后的pip真实地址是： /usr/bin/pip3 ,也就是说，要用pip3这个命令去查看是否安装成功： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 --version </span><br></pre></td></tr></table></figure>
+<p>可以用： dpkg -L python3-pip 查看一下安装的程序文件位置。</p>
+<h2 id="安装sublime-text3"><a href="#安装sublime-text3" class="headerlink" title="安装sublime-text3"></a>安装sublime-text3</h2><p>安装Sublime text3：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb https://download.sublimetext.com/ apt/stable/&quot;</span> | sudo tee /etc/apt/sources.list.d/sublime-text.list</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install sublime-text</span><br></pre></td></tr></table></figure>
+<h2 id="MPV配置文件"><a href="#MPV配置文件" class="headerlink" title="MPV配置文件"></a>MPV配置文件</h2><p>把文件放在~.config/mpv目录下</p>
+<p>创建mpv.conf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#强制CPU软解</span></span><br><span class="line"><span class="comment">#hwdec=no</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#硬解</span></span><br><span class="line"><span class="comment">#hwdec=vaapi</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#没有边框</span></span><br><span class="line">no-border</span><br><span class="line"></span><br><span class="line"><span class="comment">#开启MPV默认高质量渲染</span></span><br><span class="line"><span class="comment">#profile=gpu-hq</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#默认色彩管理</span></span><br><span class="line"><span class="comment">#icc-profile-auto</span></span><br><span class="line"><span class="comment">#blend-subtitles=video</span></span><br><span class="line"><span class="comment">#scale=ewa_lanczossharp</span></span><br><span class="line"><span class="comment">#video-sync=display-resample</span></span><br><span class="line"><span class="comment">#interpolation</span></span><br><span class="line"><span class="comment">#tscale=oversample</span></span><br><span class="line"></span><br><span class="line">hwdec=vdpau</span><br></pre></td></tr></table></figure>
+<p>创建input.conf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">MBTN_LEFT     ignore			<span class="comment">#鼠标左键 无操作</span></span><br><span class="line">MBTN_LEFT_DBL cycle fullscreen		<span class="comment">#左键双击 全屏/退出全屏</span></span><br><span class="line">MBTN_RIGHT    cycle pause			<span class="comment">#右键 暂停/继续</span></span><br><span class="line">MBTN_BACK     playlist-prev			<span class="comment">#侧键向前 播放列表上一个</span></span><br><span class="line">MBTN_FORWARD  playlist-next			<span class="comment">#侧键向后 播放列表下一个</span></span><br><span class="line">WHEEL_UP      add volume 1			<span class="comment">#滚轮向上 音量+5</span></span><br><span class="line">WHEEL_DOWN    add volume -1			<span class="comment">#滚轮向下 音量-5</span></span><br><span class="line"></span><br><span class="line">ESC <span class="built_in">set</span> fullscreen no			<span class="comment">#ESC 退出全屏</span></span><br><span class="line">SPACE cycle pause			<span class="comment">#空格 暂停/继续</span></span><br><span class="line">ENTER cycle fullscreen			<span class="comment">#回车 全屏/退出全屏</span></span><br><span class="line">KP_ENTER cycle fullscreen			<span class="comment">#小键盘回车 全屏/退出全屏</span></span><br><span class="line"></span><br><span class="line">UP  add volume 2			<span class="comment">#方向键上 音量+2</span></span><br><span class="line">DOWN  add volume -2			<span class="comment">#方向键下 音量-2</span></span><br><span class="line">Shift+UP  add volume  10			<span class="comment">#音量+10</span></span><br><span class="line">Shift+DOWN  add volume -10</span><br><span class="line">LEFT  seek -2			<span class="comment">#方向键左 后退2秒</span></span><br><span class="line">RIGHT seek  2			<span class="comment">#方向键右 前进2秒</span></span><br><span class="line">Shift+LEFT  seek -30 exact</span><br><span class="line">Shift+RIGHT seek 85 exact			<span class="comment">#前进85秒，便于跳op</span></span><br><span class="line">Ctrl+UP add audio-delay -0.1			<span class="comment">#音频延迟-0.1</span></span><br><span class="line">Ctrl+DOWN add audio-delay +0.1</span><br><span class="line">Ctrl+LEFT add sub-delay -0.1			<span class="comment">#字幕延迟-0.1</span></span><br><span class="line">Ctrl+RIGHT  add sub-delay 0.1</span><br><span class="line"></span><br><span class="line"><span class="comment">#播放列表上一个、下一个；</span></span><br><span class="line">PGUP playlist-prev</span><br><span class="line">PGDWN playlist-next</span><br><span class="line"><span class="comment">#视频内上一、下一章节</span></span><br><span class="line">HOME add chapter -1</span><br><span class="line">END add chapter 1</span><br><span class="line"></span><br><span class="line">t cycle ontop			<span class="comment">#设置窗口最前</span></span><br><span class="line">= screenshot video			<span class="comment">#视频截图</span></span><br><span class="line">+ screenshot			<span class="comment">#带界面（OSC/OSD）截图</span></span><br><span class="line">z <span class="built_in">set</span> speed 1.0			<span class="comment">#播放速度设为1</span></span><br><span class="line">c add speed 0.1			<span class="comment">#播放速度+0.1</span></span><br><span class="line">x add speed -0.1			<span class="comment">#播放速度-0.1</span></span><br><span class="line">k show_text <span class="variable">$&#123;track-list&#125;</span>			<span class="comment">#显示轨道信息</span></span><br><span class="line">l show_text <span class="variable">$&#123;playlist&#125;</span>			<span class="comment">#显示播放列表</span></span><br><span class="line">a cycle audio			<span class="comment">#切换音轨</span></span><br><span class="line">f cycle mute			<span class="comment">#静音/取消静音</span></span><br><span class="line">s cycle sub			<span class="comment">#切换字幕轨</span></span><br><span class="line">d cycle sub-visibility			<span class="comment">#隐藏字幕/显示字幕</span></span><br><span class="line">\ show-progress			<span class="comment">#显示播放进度</span></span><br><span class="line">TAB script-binding stats/display-stats-toggle			<span class="comment">#打开播放信息，1234翻页，4查看激活的快捷键方案 </span></span><br></pre></td></tr></table></figure>
+<h2 id="核显视频硬解"><a href="#核显视频硬解" class="headerlink" title="核显视频硬解"></a>核显视频硬解</h2><blockquote>
+<p>Intel核显的视频硬件，主要用VA-API来进行解码</p>
+</blockquote>
+<p>七代之前的安装以下依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install i965-va-driver-shaders libva-drm2 libva-x11-2</span><br></pre></td></tr></table></figure>
+<p>八代以上的安装以下依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install intel-media-va-driver-non-free libva-drm2 libva-x11-2</span><br></pre></td></tr></table></figure>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://www.linuxuprising.com/2021/01/how-to-enable-hardware-accelerated.html">How To Enable Hardware Accelerated Video Decode In Google Chrome, Brave, Vivaldi And Opera Browsers On Debian, Ubuntu Or Linux Mint - Linux Uprising Blog</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>jacid233
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2022/11/24/Ubuntu_install_after/" title="Ubuntu安装后">http://example.com/2022/11/24/Ubuntu_install_after/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/24/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jacid233</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

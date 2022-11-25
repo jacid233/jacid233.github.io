@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/./public/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="这是我自己的编译笔记，写得非常垃圾就对了，其实你们认真看下去并操作，是能看懂的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何编译第三方类原生">
+<meta property="og:url" content="http://example.com/2022/11/24/Build_custom_android/index.html">
+<meta property="og:site_name" content="jacid233&#39;s blog">
+<meta property="og:description" content="这是我自己的编译笔记，写得非常垃圾就对了，其实你们认真看下去并操作，是能看懂的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/11/24/Build_custom_android/repo.png">
+<meta property="og:image" content="http://example.com/2022/11/24/Build_custom_android/repo_config.png">
+<meta property="og:image" content="http://example.com/2022/11/24/Build_custom_android/switch_branch.png">
+<meta property="og:image" content="http://example.com/2022/11/24/Build_custom_android/use_aosp.png">
+<meta property="og:image" content="http://example.com/2022/11/24/Build_custom_android/set_config.png">
+<meta property="og:image" content="http://example.com/2022/11/24/Build_custom_android/posix_spawn.png">
+<meta property="article:published_time" content="2022-11-24T02:15:01.000Z">
+<meta property="article:modified_time" content="2022-11-25T10:54:57.020Z">
+<meta property="article:author" content="jacid233">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/11/24/Build_custom_android/repo.png">
+
+
+<link rel="canonical" href="http://example.com/2022/11/24/Build_custom_android/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>如何编译第三方类原生 | jacid233's blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">jacid233's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th 分类 fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user 关于 fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%8B%E5%AE%8C%E5%90%8E%E8%83%BD%E5%AD%A6%E5%88%B0%E4%BB%80%E4%B9%88%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%90%88%E6%A0%BC%E7%9A%84buildbot%E5%90%97%EF%BC%9F"><span class="nav-text">看完后能学到什么，可以成为一个合格的buildbot吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%A6%81%E6%B1%82"><span class="nav-text">配置要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E4%BE%9D%E8%B5%96"><span class="nav-text">安装编译依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81"><span class="nav-text">同步源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AErepo"><span class="nav-text">一、配置repo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Git%E8%B4%A6%E5%8F%B7%E9%85%8D%E7%BD%AE"><span class="nav-text">二、Git账号配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96repo%E4%BB%93%E5%BA%93"><span class="nav-text">三、初始化repo仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81"><span class="nav-text">四、同步源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="nav-text">五、同步源码需要注意什么</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81"><span class="nav-text">编译源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%87%86%E5%A4%87%E5%A5%BD%E7%BC%96%E8%AF%91%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">一、准备好编译的配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%BC%96%E8%AF%91"><span class="nav-text">二、编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BC%96%E8%AF%91%E5%87%BA%E6%9D%A5%E7%9A%84%E5%8C%85%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="nav-text">三、编译出来的包在哪里</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">编译遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%818GB%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E5%A4%AA%E4%BD%8E%E5%AF%BC%E8%87%B4%E5%90%8E%E6%9C%9F%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91"><span class="nav-text">一、8GB物理内存太低导致后期无法编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%BC%96%E8%AF%91%E7%9A%84%E7%BB%88%E7%AB%AF%E8%BF%9B%E7%A8%8B%E8%A2%AB%E7%B3%BB%E7%BB%9F%E6%9D%80%E6%8E%89%E4%BA%86"><span class="nav-text">二、编译的终端进程被系统杀掉了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81posix-spawn-Argument-list-too-long"><span class="nav-text">三、posix_spawn: Argument list too long</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%A6%81%E8%AF%B4%E7%9A%84"><span class="nav-text">其他要说的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="jacid233"
+      src="/images/jacid233.jpg">
+  <p class="site-author-name" itemprop="name">jacid233</p>
+  <div class="site-description" itemprop="description">testing</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jacid233" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jacid233" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/24/Build_custom_android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/jacid233.jpg">
+      <meta itemprop="name" content="jacid233">
+      <meta itemprop="description" content="testing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jacid233's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何编译第三方类原生
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-24 10:15:01" itemprop="dateCreated datePublished" datetime="2022-11-24T10:15:01+08:00">2022-11-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-11-25 18:54:57" itemprop="dateModified" datetime="2022-11-25T18:54:57+08:00">2022-11-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li>这是我自己的编译笔记，写得非常垃圾就对了，其实你们认真看下去并操作，是能看懂的</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="看完后能学到什么，可以成为一个合格的buildbot吗？"><a href="#看完后能学到什么，可以成为一个合格的buildbot吗？" class="headerlink" title="看完后能学到什么，可以成为一个合格的buildbot吗？"></a>看完后能学到什么，可以成为一个合格的buildbot吗？</h2><p>很遗憾地告诉你，不能！至少知道一个类原生是怎么编译出来的。说了那么多废话还是大概说一下流程，其实就是下载(同步)源码，找到device tree等配置文件后编译而已，期间当然需要安装一些依赖之类的。</p>
+<h2 id="配置要求"><a href="#配置要求" class="headerlink" title="配置要求"></a>配置要求</h2><p>这是本文采取的硬件配置</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>型号或者配置</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CPU</td>
+<td>i7-8550U</td>
+<td>线程越多速度越快</td>
+</tr>
+<tr>
+<td>内存条</td>
+<td>8G</td>
+<td>最低8G，建议32GB起步</td>
+</tr>
+<tr>
+<td>硬盘</td>
+<td>三星PM871</td>
+<td>编译必须固态！</td>
+</tr>
+<tr>
+<td>系统</td>
+<td>Ubuntu20.04</td>
+<td>其他Linux发行版也可以，但不建议WSL</td>
+</tr>
+<tr>
+<td>所需空间</td>
+<td>217.3GB</td>
+<td>这个是编译ArrowOS12.1的最低空间，建议250GB</td>
+</tr>
+<tr>
+<td>SWAP/zram</td>
+<td>20GB</td>
+<td>总之 内存+交换分区 至少要大于32GB</td>
+</tr>
+</tbody></table>
+<h2 id="安装编译依赖"><a href="#安装编译依赖" class="headerlink" title="安装编译依赖"></a>安装编译依赖</h2><blockquote>
+<p>怎么设置国内源我就不说了</p>
+</blockquote>
+<p>以下的编译依赖，来自LineageOS wiki：<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/instantnoodle/build">Build for instantnoodle | LineageOS Wiki</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev</span><br></pre></td></tr></table></figure>
+<p>然后顺便安装个python3，毕竟repo需要用到！可以参考这条命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python-is-python3</span><br></pre></td></tr></table></figure>
+<h2 id="同步源码"><a href="#同步源码" class="headerlink" title="同步源码"></a>同步源码</h2><h3 id="一、配置repo"><a href="#一、配置repo" class="headerlink" title="一、配置repo"></a>一、配置repo</h3><p>下载 <code>repo</code> 到 <code>&#123;home&#125;/bin</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo</span><br></pre></td></tr></table></figure>
+<p>然后赋予执行权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x ~/bin/repo</span><br></pre></td></tr></table></figure>
+<p>修改刚才下载的repo文件,把repo_url的链接改成如下的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/</span><br></pre></td></tr></table></figure>
+<p>​    <img src="/2022/11/24/Build_custom_android/repo.png" alt="repo"></p>
+<p>然后使用以下命令打开 <code>.bashrc</code>，主要是配置环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>在 <code>.bashrc</code> 添加以下内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PATH=~/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+<p>接着使用以下命令刷新系统的环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>注意：不要手动用apt install repo来安装repo !否则会冲突系统会优先使用apt安装的repo，从而导致拉取repo源码配置文件，一直访问谷歌。</p>
+<h3 id="二、Git账号配置"><a href="#二、Git账号配置" class="headerlink" title="二、Git账号配置"></a>二、Git账号配置</h3><p>这个我就不多说了，LineageOS wiki里面也有，这个用户名和账号可以随便填</p>
+<img src="/2022/11/24/Build_custom_android/repo_config.png">
+
+<h3 id="三、初始化repo仓库"><a href="#三、初始化repo仓库" class="headerlink" title="三、初始化repo仓库"></a>三、初始化repo仓库</h3><blockquote>
+<p>终于到拉源码的正文了是吧，哈哈哈哈哈哈哈哈哈</p>
+</blockquote>
+<p>首先，在你需要拉源码的地方创建一个文件夹，比如说我要拉取LineageOS19.1的，那我就创建一个LineageOS文件夹吧，然后在终端进入这个文件夹。</p>
+<p>因为像 LineageOS 为代表的类原生，是开源到 Github 的，所以在 Github 能找到 <a target="_blank" rel="noopener" href="https://github.com/LineageOS">LineageOS </a>的官方用户，找到 <code>android</code> 仓库，这个仓库有同步源码的说明，因为我们是编译Lineage-19.1 (对应安卓版本是12.1)，选择 lineage-19.1 分支就行。</p>
+<img src="/2022/11/24/Build_custom_android/switch_branch.png">
+
+<p>然后执行这个命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo init -u https://github.com/LineageOS/android.git -b lineage-19.1 --depth=1</span><br></pre></td></tr></table></figure>
+<p>也许你们会有疑问，为何与官方的 <em>readme</em> 多了个 –depth=1 ？</p>
+<p>答：这是仅同步最近的一个版本提交，没加的话就拉取全部提交了，这样所需空间217.3GB是不可能够的。</p>
+<h3 id="四、同步源码"><a href="#四、同步源码" class="headerlink" title="四、同步源码"></a>四、同步源码</h3><blockquote>
+<p>新手们也许就盲目跟着官方 README走，直接执行repo sync 了，然后一堆 404 ：什么的谷歌404，Github访问不了</p>
+</blockquote>
+<p>你们需要修改一下repo配置文件，首先修改 <code>.repo/manifest/default.xml </code></p>
+<p>把下面的fetch（标红的）改成国内的镜像站点，比如说：</p>
+<p>清华大学镜像源：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/git/AOSP">https://mirrors.tuna.tsinghua.edu.cn/git/AOSP</a></p>
+<p>北京外国语大学镜像源：<a target="_blank" rel="noopener" href="https://mirrors.bfsu.edu.cn/git/AOSP/">https://mirrors.bfsu.edu.cn/git/AOSP</a></p>
+<p>建议用后者，清华大学镜像站会抽风！这样就解决了AOSP源访问谷歌的问题</p>
+<img src="/2022/11/24/Build_custom_android/use_aosp.png">
+
+<p>然后还要修改一下 <code>.repo/manifests.git/config</code> 把Github改成国内可用的镜像源</p>
+<img src="/2022/11/24/Build_custom_android/set_config.png">
+
+<p>推荐几个吧，选一个就行(好像有一些镜像站挂了，先打开浏览看看)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://cdn.githubjs.cf/</span><br><span class="line">https://hub.fastgit.xyz/</span><br><span class="line">https://fasthub.cc/</span><br></pre></td></tr></table></figure>
+<p>改好了就可以愉快地</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo sync</span><br></pre></td></tr></table></figure>
+<h3 id="五、同步源码需要注意什么"><a href="#五、同步源码需要注意什么" class="headerlink" title="五、同步源码需要注意什么"></a>五、同步源码需要注意什么</h3><p>建议深夜同步源码吧，最好避开下午，当然有科学上网那就更好</p>
+<h2 id="编译源码"><a href="#编译源码" class="headerlink" title="编译源码"></a>编译源码</h2><blockquote>
+<p>这里坑有点艹，内存足够大的就不必担心</p>
+</blockquote>
+<h3 id="一、准备好编译的配置文件"><a href="#一、准备好编译的配置文件" class="headerlink" title="一、准备好编译的配置文件"></a>一、准备好编译的配置文件</h3><blockquote>
+<p>主要是以下内容</p>
+</blockquote>
+<ul>
+<li>device-tree</li>
+<li>kernel-source</li>
+<li>vendor-blob</li>
+<li>hardware-hal</li>
+</ul>
+<p>至于这些tree怎么找，这里已经有人说了</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luoyesiqiu/p/10701419.html">自己动手编译Android(LineageOS)源码 - luoyesiqiu - 博客园 (cnblogs.com)</a></p>
+<h3 id="二、编译"><a href="#二、编译" class="headerlink" title="二、编译"></a>二、编译</h3><p>进入刚才同步源码的目录，执行以下命令配置安卓编译环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> build/envsetup.sh</span><br></pre></td></tr></table></figure>
+<p>然后就 lunch 初始化设备</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lunch lineage_OP4AD9-eng</span><br></pre></td></tr></table></figure>
+<p>接着就编译了输入以下命令，建议后缀加上tee | xxx.txt保存终端输出的信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brunch lineage_OP4AD9-eng | tee build.txt</span><br></pre></td></tr></table></figure>
+<h3 id="三、编译出来的包在哪里"><a href="#三、编译出来的包在哪里" class="headerlink" title="三、编译出来的包在哪里"></a>三、编译出来的包在哪里</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">源码目录/out/target/product/设备代号/</span><br></pre></td></tr></table></figure>
+<p>你会找到包、recovery.img等一系列内容</p>
+<h2 id="编译遇到的问题"><a href="#编译遇到的问题" class="headerlink" title="编译遇到的问题"></a>编译遇到的问题</h2><h3 id="一、8GB物理内存太低导致后期无法编译"><a href="#一、8GB物理内存太低导致后期无法编译" class="headerlink" title="一、8GB物理内存太低导致后期无法编译"></a>一、8GB物理内存太低导致后期无法编译</h3><p>在源码目录/build/soong/java/droidstubs.go 找到 <code>Flag(config.JavacVmFlags).</code> 在下面添加以下语句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Flag(<span class="string">&quot;-J-Xmx6114m&quot;</span>).</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="二、编译的终端进程被系统杀掉了"><a href="#二、编译的终端进程被系统杀掉了" class="headerlink" title="二、编译的终端进程被系统杀掉了"></a>二、编译的终端进程被系统杀掉了</h3><p>一看就知道你装了Ubuntu22.04，21版本就不清楚了，看这个吧</p>
+<p><a target="_blank" rel="noopener" href="https://answers.launchpad.net/ubuntu/+question/701605">Question #701605 “Terminal closes itself when building Android r…” : Questions : Ubuntu (launchpad.net)</a></p>
+<h3 id="三、posix-spawn-Argument-list-too-long"><a href="#三、posix-spawn-Argument-list-too-long" class="headerlink" title="三、posix_spawn: Argument list too long"></a>三、posix_spawn: Argument list too long</h3><img src="/2022/11/24/Build_custom_android/posix_spawn.png">
+
+<p>恭喜，摆烂吧，没救了，换个类原生看看吧。</p>
+<h2 id="其他要说的"><a href="#其他要说的" class="headerlink" title="其他要说的"></a>其他要说的</h2><p>问：用了–depth=1同步安卓12.1的源码有多大？</p>
+<p>答：.repo本体就22.5G，加上释放出来的文件，大约94.5GB。</p>
+<br>
+
+<p>问：编译出来的out目录，用了多少空间</p>
+<p>答：我记得编译过一次arrowos12.1，好像是122.8G吧。</p>
+<br>
+
+<p>问：你在编译的时候，soong加载阶段用时也很长吗？你电脑编译完一个包用了多久？</p>
+<p>答：是的，大概用了30分钟，如果内存是32GB就没必要担忧此事。编译时间用了6小时。</p>
+<br>
+
+<p>问：VPS怎么选购？</p>
+<p>答：我没用VPS，毕竟没信用卡，不过要注意VPS缩水和限制性能的情况！</p>
+<br>
+
+<p>问：去淘宝租远程主机怎样？</p>
+<p>答：这也是个好选择。就是传输编译文件比较烦人。</p>
+<br>
+
+<p>问：编译有啥技巧吗？</p>
+<p>答：可以先make bootiamge或者make recoveryimage看看内核源码是否能正常编译和使用。</p>
+<p>问：有大佬做的视频的编译教学吗？</p>
+<p>答：有，看这个！</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/instantnoodle/build">Build for instantnoodle | LineageOS Wiki</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/LineageOS/android">LineageOS/android (github.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/">AOSP | 镜像站使用帮助 | 清华大学开源软件镜像站 | Tsinghua Open Source Mirror</a></p>
+<p>[<a target="_blank" rel="noopener" href="https://forum.xda-developers.com/t/guide-how-to-build-android-11-with-low-ram.4298483/">GUIDE] How to build Android 11 with low ram | XDA Forums (xda-developers.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/User:Tuju/Disable_systemd-oomd">https://fedoraproject.org/wiki/User:Tuju/Disable_systemd-oomd</a></p>
+<p><a target="_blank" rel="noopener" href="https://answers.launchpad.net/ubuntu/+question/701605">Question #701605 “Terminal closes itself when building Android r…” : Questions : Ubuntu (launchpad.net)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luoyesiqiu/p/10701419.html">自己动手编译Android(LineageOS)源码 - luoyesiqiu - 博客园 (cnblogs.com)</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>jacid233
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2022/11/24/Build_custom_android/" title="如何编译第三方类原生">http://example.com/2022/11/24/Build_custom_android/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/28/hackintosh3/" rel="prev" title="终端配置与美化">
+                  <i class="fa fa-chevron-left"></i> 终端配置与美化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/11/24/hello-world/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jacid233</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
