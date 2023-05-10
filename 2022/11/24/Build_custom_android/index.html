@@ -37,7 +37,7 @@
 <meta property="og:image" content="http://example.com/2022/11/24/Build_custom_android/set_config.png">
 <meta property="og:image" content="http://example.com/2022/11/24/Build_custom_android/posix_spawn.png">
 <meta property="article:published_time" content="2022-11-24T02:15:01.000Z">
-<meta property="article:modified_time" content="2023-03-26T02:49:26.000Z">
+<meta property="article:modified_time" content="2023-05-10T07:09:56.490Z">
 <meta property="article:author" content="jacid233">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/11/24/Build_custom_android/repo.png">
@@ -295,7 +295,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2023-03-26 10:49:26" itemprop="dateModified" datetime="2023-03-26T10:49:26+08:00">2023-03-26</time>
+        <time title="修改时间：2023-05-10 15:09:56" itemprop="dateModified" datetime="2023-05-10T15:09:56+08:00">2023-05-10</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -370,6 +370,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev</span><br></pre></td></tr></table></figure>
 <p>然后顺便安装个python3，毕竟repo需要用到！可以参考这条命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python-is-python3</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>补充,如果用的是Debian bookworn,用下面的也可以</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install make gcc flex bison libssl-dev curl git libncurses5-dev zip libfdt1 device-tree-compiler imagemagick</span><br></pre></td></tr></table></figure>
 <h2 id="同步源码"><a href="#同步源码" class="headerlink" title="同步源码"></a>同步源码</h2><h3 id="一、配置repo"><a href="#一、配置repo" class="headerlink" title="一、配置repo"></a>一、配置repo</h3><p>先在 <code>&#123;home&#125;</code> 下创建目录 <code>bin</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir bin</span><br></pre></td></tr></table></figure>
 <p>下载 <code>repo</code> 到 <code>&#123;home&#125;/bin</code></p>
@@ -461,6 +465,10 @@
 <p>答：是的，大概用了30分钟，如果内存是32GB就没必要担忧此事。编译时间用了6小时。</p>
 <br>
 
+<p>问：有没有办法可以缩短soong加载阶段的时间？</p>
+<p>答：用zram取代swap可以达到事半功倍的效果，我用了之后，soong阶段时间从原来的30min缩减到10min</p>
+<br>
+
 <p>问：VPS怎么选购？</p>
 <p>答：我没用VPS，毕竟没信用卡，不过要注意VPS缩水和限制性能的情况！</p>
 <br>
@@ -470,9 +478,16 @@
 <br>
 
 <p>问：编译有啥技巧吗？</p>
-<p>答：可以先make bootiamge或者make recoveryimage看看内核源码是否能正常编译和使用。</p>
+<p>答：可以先make bootiamge或者make recoveryimage看看内核源码是否能正常编译和使用。如果要测试编译的系统是否能正常开机之类的就使用make systemimage,make odmimage等一系列的命令编译出img文件，打包成zip，通过dsu来临时加载编译的镜像(如果是A-only分区的,需要单独刷如boot.img和dtbo.img)。</p>
+<br>
+
 <p>问：有大佬做的视频的编译教学吗？</p>
-<p>答：有，看这个！</p>
+<p>答：有，看这个，这个是早期安卓版本适配 <code>device-tree</code> 的视频，虽然视频的编译内容占比少，但是能让你们大体知道 <code>device tree</code> , <code>vendor blob</code> 等东西是怎么来的！</p>
+<p><a target="_blank" rel="noopener" href="https://gitlab.com/alaskalinuxuser/advanced_course_android_developer_guide_mp4">https://gitlab.com/alaskalinuxuser/advanced_course_android_developer_guide_mp4</a></p>
+<br>
+
+<p>问：如果编译出来的包，开机直接进入fastboot该怎么分析原因？</p>
+<p>答：理论上可以通过pstore来抓取这类崩溃日志的，实际上你压根就抓不了pstore，遇到这种情况你要看看fstab啥的是否写对，分区挂载是否全，内核的SELinux是否有问题等……</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/instantnoodle/build">Build for instantnoodle | LineageOS Wiki</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/LineageOS/android">LineageOS/android (github.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/">AOSP | 镜像站使用帮助 | 清华大学开源软件镜像站 | Tsinghua Open Source Mirror</a></p>
